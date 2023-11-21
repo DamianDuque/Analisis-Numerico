@@ -1,0 +1,11 @@
+Cap1: Bisección, punto fijo, regla falsa, Newton, secante, raíces múltiples. 
+
+
+Cap2: Jacobi, Gauss seidel, Sor. 
+
+
+Cap3: vandermonde, Newton interpolante, Lagrange,  spline lineal y cúbico.
+
+
+
+Cada método debe pedir las entradas y entregar tablas de salida, en  el capítulo 1 y en el 3 se debe entregar la gráfica de la función y los polinomios de interpolación respectivamente, En el capitulo 2 de entregar el radio espectral y mencionar si el método converge o nó según este radio. La sustentación la realiza todo el grupo presencial en el horario de clase. Yo les estaré informando la hora de la cita a cada grupo. Por último, recuerden que lo entrega un solo integrante del grupo, y poner quienes son los demás integrantes en la entrega.

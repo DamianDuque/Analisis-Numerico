@@ -1,0 +1,69 @@
+            s1 = app.ITERListBox.Value;
+            s2 = 'Jacobi';
+            valmet = strcmp(s1,s2);
+            if valmet
+                met = 0;
+            else
+                met = 1;
+            end
+
+
+            function x1 = NewJacobiSeid(x0,A,b,met)
+                n=length(A);
+                x1=x0;
+                for i=1:n
+                    sum=0;
+                    for j=1:n
+                        if j~=i && met==0
+                            sum=sum+A(i,j)*x0(j);
+                        elseif j~=i && met==1
+                            sum=sum+A(i,j)*x1(j);
+                        end
+                    end
+                    x1(i)=(b(i)-sum)/A(i,i);
+                end
+            end
+
+            %Definir x0:
+            x0 = [str2num(app.ITERmx01.Value);str2num(app.ITERmx02.Value);str2num(app.ITERmx03.Value)];
+
+            %Definir A:
+            A = [str2num(app.ITERmA11.Value) str2num(app.ITERmA12.Value) str2num(app.ITERmA13.Value);str2num(app.ITERmA21.Value) str2num(app.ITERmA22.Value) str2num(app.ITERmA23.Value); str2num(app.ITERmA31.Value) str2num(app.ITERmA32.Value) str2num(app.ITERmA33.Value)];
+            
+            %Definir B:
+            b = [str2num(app.ITERmb1.Value);str2num(app.ITERmb2.Value);str2num(app.ITERmb3.Value)];
+            
+            %Definir el resto de valores
+            Tol = app.ITERtol.Value;  %0.05;%app.SORtol.Value;
+            niter = app.ITERnitter.Value;    %100;%app.SORnitter.Value;
+            
+
+            c=0;
+            cou=1;
+            error=Tol+1;
+            while error>Tol && c<niter
+                x1=NewJacobiSeid(x0,A,b,met);
+                E(c+1)=norm(x1-x0,'inf');
+                counter(c+1)=cou;
+                error=E(c+1);
+                x0=x1;
+                c=c+1;
+                cou=cou+1;
+            end
+            if error < Tol
+                s=x0;
+                n=c;
+                s
+                
+                app.ITERTabla.Data = table(counter(:),E(:));
+                app.ITERsolucion.Value = string(s);
+                app.ITERradioe.Value = num2str(max(abs(eig(A))));
+            else 
+                s=x0;
+                n=c;
+
+                app.ITERTabla.Data = table(counter(:),E(:));
+                result = {'Fracasó en ', num2str(niter), ' iteraciones'};
+                app.ITERsolucion.Value = strcat(result);
+                app.ITERradioe.Value = num2str(max(abs(eig(A))));
+            end
