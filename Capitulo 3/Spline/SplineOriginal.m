@@ -1,5 +1,3 @@
-% Spline
-
 %Spline: Calcula los coeficienetes de los polinomios de interpolación de
 % grado d (1, 2, 3) para el conjunto de n datos (x,y), 
 % mediante el método spline.
@@ -130,7 +128,6 @@ function [Tabla] = Spline(x,y,d)
     Tabla=Tabla';
 end
 
-% Graficas
 
 clc 
 close all
@@ -140,14 +137,17 @@ xpol0=1:0.001:2;
 xpol1=2:0.001:3;
 %xpol2=2:0.001:3;
 
+% Lineal
 % p0=2*xpol0+28;
 % p1=4*xpol1+24;
 % p2=1*xpol2+33;
 
+%Cubico
 % p0=Tabla(1,1)*xpol0.^3+Tabla(1,2)*xpol0.^2+Tabla(1,3)*xpol0+Tabla(1,4);
 % p1=Tabla(2,1)*xpol1.^3+Tabla(2,2)*xpol1.^2+Tabla(2,3)*xpol1+Tabla(2,4);
 % p2=Tabla(3,1)*xpol2.^3+Tabla(3,2)*xpol2.^2+Tabla(3,3)*xpol2+Tabla(3,4);
 
+%Cuadratico
 p0=Tabla(1,1)*xpol0.^2+Tabla(1,2)*xpol0+Tabla(1,3);
 p1=Tabla(2,1)*xpol1.^2+Tabla(2,2)*xpol1+Tabla(2,3);
 %p2=Tabla(3,1)*xpol2.^2+Tabla(3,2)*xpol2+Tabla(3,3);

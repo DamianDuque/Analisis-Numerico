@@ -1,26 +1,34 @@
             s1 = app.SPLINEListBox.Value;
             s2 = 'Cuadrático';
-            s3 = 'Cúbico'
+            s3 = 'Cúbico';
             valmet = strcmp(s1,s2);
             valmet2 = strcmp(s1,s3);
             if valmet
-                met = 2;
+                d = 2;
             elseif valmet2
-                met = 3;
+                d = 3;
             else
-                met = 1;
+                d = 1;
             end
-
-
-
-            n=length(x);
-            A=zeros((d+1)*(n-1));
-            b=zeros((d+1)*(n-1),1);
-            cua=x.^2;
-            cub=x.^3;
             
+            
+            xtemp = app.SPLINEx.Value;
+            ytemp = app.SPLINEy.Value;
+            disp(xtemp);
+            disp(ytemp);
+            x = str2double(strsplit(xtemp));
+            y = str2double(strsplit(ytemp));
+            disp(x);
+            disp(y);
+            
+            n = length(x);
+            A = zeros((d + 1) * (n - 1));
+            b = zeros((d + 1) * (n - 1), 1);
+            cua = x.^2;
+            cub = x.^3;
+        
             %% lineal
-            if met==1
+            if d==1
                 c=1;
                 h=1;
                 for i=1:n-1
@@ -40,7 +48,7 @@
                     h=h+1;
                 end
             %% Cuadratic
-            elseif met==2
+            elseif d==2
                 c=1;
                 h=1;
                 for i=1:n-1
@@ -76,8 +84,8 @@
                 A(h,1)=2;
                 b(h)=0;
                 
-            %% Cubic
-            elseif met==3
+          %% Cubic
+            elseif d==3
                 c=1;
                 h=1;
                 for i=1:n-1
@@ -133,18 +141,29 @@
                 A(h,c+1)=2;
                 b(h)=0;
             end
-
-            val=inv(A)*b;
-            Tabla=reshape(val,d+1,n-1);
-            Tabla=Tabla';
-
-            if met==1
-
-
-
-            elseif met==2
-
-
-
-
-            elseif met==3
+        
+            val = inv(A) * b;
+            Tabla2 = reshape(val, d + 1, n - 1);
+            Tabla2 = Tabla2';
+        
+            % Graficar automáticamente
+            figure;
+            plot(app.SPLINEAxes,x, y, 'r*');
+            hold(app.SPLINEAxes,"on");
+        
+            % Crear xpol para la graficación
+            xpol = cell(1, n - 1);
+            for i = 1:n - 1
+                xpol{i} = linspace(x(i), x(i + 1), 1000);
+            end
+        
+            % Graficar los polinomios
+            for i = 1:n - 1
+                p = polyval(Tabla2(i, :), xpol{i});
+                plot(app.SPLINEAxes,xpol{i}, p);
+            end
+        
+            grid on;
+            title(app.SPLINEAxes,['Interpolación Spline de grado ' num2str(d)]);
+            app.SPLINETabla.Data = Tabla2;
+            % Ajusta según el grado máximo
